@@ -1,7 +1,5 @@
 package it.zeno.scuola.verifiche.docx.paragraphremix.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,10 +9,10 @@ public class Questionario extends Paragrafo{
 	+ "<w:ind w:left=\"993\" w:hanging=\"993\"/><w:rPr><w:rFonts w:ascii=\"Consolas\" w:hAnsi=\"Consolas\" w:cstheme=\"minorHAnsi\"/>"
 	+ "<w:sz w:val=\"24\"/><w:szCs w:val=\"24\"/></w:rPr></w:pPr><w:r w:rsidRPr=\"007F4FF0\">"
 	+ "<w:rPr><w:rFonts w:ascii=\"Consolas\" w:hAnsi=\"Consolas\" w:cstheme=\"minorHAnsi\"/>"
-	+ "<w:sz w:val=\"24\"/><w:szCs w:val=\"24\"/></w:rPr><w:t>";
+	+ "<w:sz w:val=\"24\"/><w:szCs w:val=\"24\"/></w:rPr><w:t xml:space=\"preserve\">";
 
 	private static boolean scanQuestionario = false;
-	private int numeroQuestionario = 0;
+	private static Integer numeroQuestionario = 1;
 
 	private static Pattern PATTERN_QUESTIONARIO = Pattern.compile("Questionario .(\\d+)");
 	
@@ -29,7 +27,7 @@ public class Questionario extends Paragrafo{
 	}
 	public void setNumeroQuestionario(String strNumeroBaseQuestionario) {
 		int numeroBaseQuestionario = Integer.parseInt(strNumeroBaseQuestionario);
-		numeroQuestionario = numeroBaseQuestionario + numeroQuestionario++;
+		numeroQuestionario = numeroBaseQuestionario + numeroQuestionario;
 	}
 	public static Questionario checkQuestionario(String p) {
 		Questionario q = null;

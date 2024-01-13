@@ -19,7 +19,7 @@ public class Alunno extends Paragrafo{
 	+ "<w:ind w:left=\"993\" w:hanging=\"993\"/><w:rPr><w:rFonts w:ascii=\"Consolas\" w:hAnsi=\"Consolas\" w:cstheme=\"minorHAnsi\"/>"
 	+ "<w:sz w:val=\"24\"/><w:szCs w:val=\"24\"/></w:rPr></w:pPr><w:r w:rsidRPr=\"007F4FF0\">"
 	+ "<w:rPr><w:rFonts w:ascii=\"Consolas\" w:hAnsi=\"Consolas\" w:cstheme=\"minorHAnsi\"/>"
-	+ "<w:sz w:val=\"24\"/><w:szCs w:val=\"24\"/></w:rPr><w:t>";
+	+ "<w:sz w:val=\"24\"/><w:szCs w:val=\"24\"/></w:rPr><w:t  xml:space=\"preserve\">";
 	private String nome;
 	private String cognome;
 	private String classe;
@@ -43,10 +43,28 @@ public class Alunno extends Paragrafo{
 		setDataNow();
 		alunnoConsumer.accept(this);
 		String txt = testo.toString().replace('\t', ' ');
-		txt = MessageFormat.format(
-			"Cognome {0} Nome {1} Classe {2} Data {3}",
-			cognome,nome,classe,data
-		);
+		txt = new StringBuilder("Cognome: ")
+			.append(Paragrafo.XML_TEXT_END)
+			.append(Paragrafo.XML_SOTTOLINEATO_GRASSETTO).append(cognome)
+			.append(Paragrafo.XML_TEXT_END)
+//			
+			.append(Paragrafo.XML_TEXT_START)
+			.append(", Nome: ")
+			.append(Paragrafo.XML_TEXT_END)
+			.append(Paragrafo.XML_SOTTOLINEATO_GRASSETTO).append(nome)
+			.append(Paragrafo.XML_TEXT_END)
+//			
+			.append(Paragrafo.XML_TEXT_START)
+			.append(", Classe: ")
+			.append(Paragrafo.XML_TEXT_END)
+			.append(Paragrafo.XML_SOTTOLINEATO_GRASSETTO).append(classe)
+			.append(Paragrafo.XML_TEXT_END)
+//			
+			.append(Paragrafo.XML_TEXT_START)
+			.append(", Data: ")
+			.append(Paragrafo.XML_TEXT_END)
+			.append(Paragrafo.XML_SOTTOLINEATO_GRASSETTO).append(data)
+		.toString();
 		empty();
 		setTesto(txt);
 		appendXmlElement(XML_START);
@@ -65,10 +83,14 @@ public class Alunno extends Paragrafo{
 	}
 
 	public void setNome(String nome) {
+		nome = Character.toUpperCase(nome.charAt(0)) + 
+				nome.substring(1);
 		this.nome = nome;
 	}
 
 	public void setCognome(String cognome) {
+		cognome = Character.toUpperCase(cognome.charAt(0)) + 
+		cognome.substring(1);
 		this.cognome = cognome;
 	}
 
@@ -85,10 +107,14 @@ public class Alunno extends Paragrafo{
 	}
 
 	public String getClasse() {
+		classe = Character.toUpperCase(classe.charAt(0)) + 
+				classe.substring(1);
+				
 		return classe;
 	}
 
 	public void setClasse(String classe) {
+		
 		this.classe = classe;
 	}
 }

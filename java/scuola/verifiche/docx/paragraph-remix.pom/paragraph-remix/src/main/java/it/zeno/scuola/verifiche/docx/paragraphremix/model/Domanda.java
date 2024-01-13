@@ -15,7 +15,7 @@ public class Domanda extends Paragrafo{
 	+ "<w:b></w:b><w:sz w:val='24'></w:sz><w:szCs w:val='24'></w:szCs><w:u w:val='single'></w:u></w:rPr></w:pPr><w:r w:rsidRPr='003135E8'>"
 	+ "<w:rPr><w:rFonts w:hAnsi='Consolas' w:cstheme='minorHAnsi' w:ascii='Consolas'></w:rFonts>"
 	+ "<w:b></w:b><w:sz w:val='24'></w:sz><w:szCs w:val='24'></w:szCs>"
-	+ "</w:rPr><w:t>";
+	+ "</w:rPr><w:t xml:space=\"preserve\">";
 	public static final String XML_TEXT_START = "<w:r><w:rPr><w:rFonts w:ascii=\"Consolas\" w:hAnsi=\"Consolas\" w:cstheme=\"minorHAnsi\"/>"
 			+ "<w:b/><w:sz w:val=\"24\"/><w:szCs w:val=\"24\"/></w:rPr><w:tab/><w:t>";
 

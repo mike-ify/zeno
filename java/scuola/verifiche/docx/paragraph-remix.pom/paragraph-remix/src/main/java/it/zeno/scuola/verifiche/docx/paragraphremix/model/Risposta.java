@@ -17,9 +17,9 @@ public class Risposta extends Paragrafo{
 			+ "</w:rPr></w:pPr><w:proofErr w:type='gramStart'></w:proofErr>"
 			+ "<w:r w:rsidRPr='003135E8'><w:rPr><w:rFonts w:hAnsi='Consolas' w:cstheme='minorHAnsi' w:ascii='Consolas'></w:rFonts>"
 			+ "<w:sz w:val='24'></w:sz><w:szCs w:val='24'></w:szCs>"
-			+ "</w:rPr><w:t>";
+			+ "</w:rPr><w:t  xml:space=\"preserve\">";
 	public static final String XML_TEXT_START = "<w:r w:rsidRPr=\"003135E8\"><w:rPr><w:rFonts w:ascii=\"Consolas\" w:hAnsi=\"Consolas\" w:cstheme=\"minorHAnsi\"/>"
-			+ "<w:sz w:val=\"24\"/><w:szCs w:val=\"24\"/></w:rPr><w:t>";
+			+ "<w:sz w:val=\"24\"/><w:szCs w:val=\"24\"/></w:rPr><w:t xml:space=\"preserve\">";
 	private static char[] alfabeto;
 
 	private Domanda parent;
@@ -52,7 +52,7 @@ public class Risposta extends Paragrafo{
 	}
 
 	public String getCodiceRisposta() {
-		return codiceRisposta;
+		return ""+codiceRisposta.charAt(0);
 	}
 
 	public void setCodiceRisposta(String codiceRisposta) {
@@ -113,6 +113,10 @@ public class Risposta extends Paragrafo{
 	            alfabeto[i] = (char) ('A' + i);
 		}
 		return alfabeto[x];
+	}
+
+	public String getLettera() {
+		return Character.toString(codiceRiordinatoRisposta.charAt(0));
 	}
 
 }
