@@ -47,8 +47,12 @@ public class Paragrafo {
 	}	
 	
 	public String toXml() {
-		//\n
-		return String.join("",xmlElements);
+		StringBuilder sb = new StringBuilder();
+		for(String xml : xmlElements) {
+			if(xml.equals(" "))
+				System.out.println(4);
+			sb.append(xml);
+		}return sb.toString();			
 	}
 
     public void empty() {

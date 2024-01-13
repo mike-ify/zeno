@@ -38,7 +38,6 @@ public class WriteXmlFileDocxInElaborazioneLogic implements AutoCloseable{
 	}
 	public WriteXmlFileDocxInElaborazioneLogic writeXmlElement(String xml) throws IOException{
 		documentXmlWriter.append(xml);
-		//documentXmlWriter.append("\n");
 		return this;
 	}
 
@@ -54,14 +53,15 @@ public class WriteXmlFileDocxInElaborazioneLogic implements AutoCloseable{
     }
 
 	public void appendTestoParagrafo(String xml, String testo) {
-		currentParagrafo.appendXmlElement(xml).appendTxt(testo);
+		currentParagrafo.appendTxt(testo);
 
-		if(testo.length() > 0 && Risposta.isRispostaStart(testo)) {
-			testo = Risposta.tryRimuoviCrocetta(testo);
+		if(testo.length() > 0 && Risposta.isRispostaStart(currentParagrafo.toText())) {
+			testo = Risposta.tryRimuoviCrocetta(currentParagrafo,testo);
 //			Domanda domanda = (Domanda)paragrafi.get(paragrafi.size() - 1);
 //			domanda.addRisposta(currentParagrafo);
+			xml = "<w:t xml:space=\"preserve\">";
 		}
-		currentParagrafo.appendXmlElement(testo);
+		currentParagrafo.appendXmlElement(xml).appendXmlElement(testo);
 	}
 
 	public void appendXmlElement(String name, String xml) {

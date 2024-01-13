@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class Risposta extends Paragrafo{
 
-	private final static Pattern PATTERN_RISPOSTA_START = Pattern.compile("^[A-Z]\\[");
+	private final static Pattern PATTERN_RISPOSTA_START = Pattern.compile("^[A-Z]\\[(\\s|X)");
 	public final static Pattern PATTERN_CODICE_RISPOSTA_VALIDA = Pattern.compile("^[A-Z]\\[X");
 	public final static Pattern PATTERN_CODICE_RISPOSTA_COMPOSE = Pattern.compile("^([A-Z]?)(\\[?)(X?)$");
 	public final static Pattern PATTERN_RISPOSTA = Pattern.compile("^[A-Z]\\[(\\s|X).{0,}$");
@@ -66,8 +66,8 @@ public class Risposta extends Paragrafo{
 		this.valid = valid;
 	}
 
-    public static String tryRimuoviCrocetta(String testo) {
-		if(PATTERN_CODICE_RISPOSTA_VALIDA.matcher(testo).matches()) {
+    public static String tryRimuoviCrocetta(Paragrafo currentParagrafo, String testo) {
+		if(PATTERN_CODICE_RISPOSTA_VALIDA.matcher(currentParagrafo.toText()).matches()) {
 			Matcher m = PATTERN_CODICE_RISPOSTA_COMPOSE.matcher(testo);
 			StringBuilder r = new StringBuilder();
 			int c = 1,t = m.groupCount() - 1;
