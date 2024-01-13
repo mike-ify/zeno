@@ -5,9 +5,13 @@
 	<groupId>it.zeno</groupId>
 	<artifactId>utils</artifactId>
 	<packaging>jar</packaging>
-	<version>B.0.0</version>
+	<version>B.1.0</version>
 	<name>Zeno Utils - Lib</name>
 	<url>http://maven.apache.org</url>
+	
+	<properties>
+	  <java.version>21</java.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>

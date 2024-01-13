@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>docx.pom</artifactId>
 		<groupId>it.zeno.scuola.verifiche</groupId>
-		<version>B.0.0</version>
+		<version>B.1.0</version>
 	</parent>
 	<artifactId>docx.paragraph-remix.pom</artifactId>
 	<packaging>pom</packaging>
@@ -13,11 +13,7 @@
 	<url>https://www.zeno.it</url>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<junit.version>3.8.1</junit.version>
-		<log4j.version>2.20.0</log4j.version>
-		<docx.utils.version>${project.version}</docx.utils.version>
-		<utils.version>B.0.0</utils.version>
+		<utils.version>B.1.0</utils.version>
 	</properties>
 
 	<modules>

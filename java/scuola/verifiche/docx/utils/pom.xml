@@ -5,9 +5,12 @@
 	<groupId>it.zeno.scuola.verifiche</groupId>
 	<artifactId>docx.utils</artifactId>
 	<packaging>jar</packaging>
-	<version>B.0.0</version>
+	<version>B.1.0</version>
 	<name>Zeno Docx Utils - Lib</name>
 	<url>https://www.zeno.it/</url>
+	<properties>
+  		<java.version>21</java.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>

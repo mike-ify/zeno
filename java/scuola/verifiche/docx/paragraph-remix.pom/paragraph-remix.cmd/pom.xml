@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>docx.paragraph-remix.pom</artifactId>
 		<groupId>it.zeno.scuola.verifiche</groupId>
-		<version>B.0.0</version>
+		<version>B.1.0</version>
 	</parent>
 	<artifactId>docx.paragraph-remix.cmd</artifactId>
 	<packaging>jar</packaging>
@@ -51,7 +51,21 @@
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>
-		<plugins></plugins>
+		<plugins>
+		  <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.1.0</version>
+            <configuration>
+                <mainClass>it.zeno.scuola.verifiche.docx.MischiaParagrafiCMD</mainClass>
+                    <arguments>
+        <argument>examples</argument>
+        <argument>crocette1.docx</argument>
+        <argument>3</argument>
+    </arguments>
+            </configuration>
+        </plugin>
+		</plugins>
 	</build>
 
 </project>

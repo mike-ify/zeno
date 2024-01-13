@@ -1,4 +1,4 @@
-package it.zeno.utils;
+package it.zeno.utils.io;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,34 +6,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Comparator;
+import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-public class IO {
-
-	public static boolean dirEmpty(Path dir) throws IOException {
-		dirRemove(dir);
-		return dir.toFile().mkdir();
-	}
-
-	public static Path mkdir(Path basePath, String name) throws IOException {
-		Path p = basePath.resolve(name);
-		p.toFile().mkdir();
-		IO.dirEmpty(p);
-		return p;
-	}
+public class Zip {
 	
-	public static void dirRemove(Path dir) throws IOException {
-		if(Files.exists(dir))
-			Files.walk(dir)
-			.sorted(Comparator.reverseOrder())
-			.map(Path::toFile)
-			.forEach(File::delete);
-	}
-	
-	public static void zipExplode(Path zipFilePath, Path destDir) {
+	public static void extract(Path zipFilePath, Path destDir) {
 		File dir = destDir.toFile();
 		if (!dir.exists())
 			dir.mkdirs();
@@ -65,13 +45,13 @@ public class IO {
 
 	}
 	
-	public static void zipImplode(Path sourceDirPath, Path zipFilePath) throws IOException {
-	    Path p = Files.createFile(zipFilePath);
+	public static void create(Path dirDaComprimere, Path nomeFileZip) throws IOException {
+	    Path p = Files.createFile(nomeFileZip);
 	    try (ZipOutputStream zs = new ZipOutputStream(Files.newOutputStream(p))) {
-	        Files.walk(sourceDirPath)
+	        Files.walk(dirDaComprimere)
 	          .filter(path -> !Files.isDirectory(path))
 	          .forEach(path -> {
-	              ZipEntry zipEntry = new ZipEntry(sourceDirPath.relativize(path).toString());
+	              ZipEntry zipEntry = new ZipEntry(dirDaComprimere.relativize(path).toString());
 	              try {
 	                  zs.putNextEntry(zipEntry);
 	                  Files.copy(path, zs);
@@ -81,6 +61,15 @@ public class IO {
 	            }
 	          });
 	    }
+	}
+	
+	public static void main(String[] args) throws IOException {
+		var pIO = "C:\\Users\\HP\\dev\\projects\\amici\\zeno\\apps\\java\\scuola\\verifiche\\docx\\paragraph-remix.pom\\paragraph-remix.cmd\\io";
+		
+		Zip.create(
+			Paths.get(pIO + "/log"),
+			Paths.get(pIO + "/log.zip")
+		);
 	}
 
 }

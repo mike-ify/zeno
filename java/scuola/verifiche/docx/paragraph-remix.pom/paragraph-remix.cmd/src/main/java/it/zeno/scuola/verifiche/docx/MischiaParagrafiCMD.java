@@ -1,17 +1,15 @@
 package it.zeno.scuola.verifiche.docx;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.zeno.scuola.verifiche.docx.paragraphremix.logic.StartElementXmlReader;
-import it.zeno.scuola.verifiche.docx.paragraphremix.service.MischiaParagrafi;
+import it.zeno.scuola.verifiche.docx.paragraphremix.model.StrutturaMischiaParagrafi;
+import it.zeno.scuola.verifiche.docx.paragraphremix.service.MischiaParagrafiService;
 
 public class MischiaParagrafiCMD {
-	private static final Logger LOG = LoggerFactory.getLogger(StartElementXmlReader.class);
+	private static final Logger LOG = LoggerFactory.getLogger(MischiaParagrafiCMD.class);
 	
 	public static void main(String[] args) throws Exception {
 
@@ -36,23 +34,17 @@ public class MischiaParagrafiCMD {
 						+ "es.: \\n c:\\\\compito-in-classe-3a nome-file-crocett.docx 3");
 				System.exit(-3);
 			}
-
-			MischiaParagrafi mischiaParagrafi = new MischiaParagrafi();
-
-			String docxOriginFileExtName = args[1];
-			if (!docxOriginFileExtName.endsWith(".docx")) {
-				LOG.error("Il formato del file word di partenza deve essere di tipo docx");
-				System.exit(-4);
+			
+			try(MischiaParagrafiService mischiaParagrafiService = new MischiaParagrafiService(
+				args[0], args[1],
+				Arrays.copyOfRange(args, 2, args.length)
+			)){
+				mischiaParagrafiService.run();
 			}
-
-			Path basePath = Paths.get(args[0]);
-
-			String[]datiAlunni = Arrays.copyOfRange(args, 2, args.length);
-
-			mischiaParagrafi.run(basePath,docxOriginFileExtName,datiAlunni);
 			
 		} catch (Exception e) {
 			LOG.error("main",e);
+			System.exit(-4);
 		}
 	}
 }

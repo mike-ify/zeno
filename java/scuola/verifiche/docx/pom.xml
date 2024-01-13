@@ -5,12 +5,14 @@
 	<groupId>it.zeno.scuola.verifiche</groupId>
 	<artifactId>docx.pom</artifactId>
 	<packaging>pom</packaging>
-	<version>B.0.0</version>
+	<version>B.1.0</version>
 	<name>Zeno Docx - POM</name>
 	<url>https://www.zeno.it</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  		<java.version>21</java.version>
+  		
 		<junit.version>3.8.1</junit.version>
 		<log4j.version>2.20.0</log4j.version>
 		<docx.paragraph-remix.pom.version>${project.version}</docx.paragraph-remix.pom.version>

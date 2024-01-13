@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,8 +17,8 @@ import it.zeno.scuola.verifiche.docx.paragraphremix.model.Domanda;
 import it.zeno.scuola.verifiche.docx.paragraphremix.model.Paragrafo;
 import it.zeno.scuola.verifiche.docx.paragraphremix.model.Risposta;
 
-public class DocumentoWriter {
-	private static final Logger LOG = LoggerFactory.getLogger(StartElementXmlReader.class);
+public class WriteXmlFileDocxInElaborazioneLogic implements AutoCloseable{
+	private static final Logger LOG = LoggerFactory.getLogger(WriteXmlFileDocxInElaborazioneLogic.class);
 	
 	private BufferedWriter documentXmlWriter;
 	
@@ -28,25 +29,27 @@ public class DocumentoWriter {
 
 	public static boolean firstDomanda;
 
-	public DocumentoWriter(Path documentXmlPath) throws IOException {
+	public WriteXmlFileDocxInElaborazioneLogic() throws IOException {
 		firstDomanda = true;
-		documentXmlWriter = Files.newBufferedWriter(documentXmlPath);
 	}
-	
-	public DocumentoWriter writeXmlElement(String xml) throws IOException{
+	public WriteXmlFileDocxInElaborazioneLogic init(Path documentXmlPath) throws IOException {
+		documentXmlWriter = Files.newBufferedWriter(documentXmlPath,StandardOpenOption.TRUNCATE_EXISTING);
+		return this;
+	}
+	public WriteXmlFileDocxInElaborazioneLogic writeXmlElement(String xml) throws IOException{
 		documentXmlWriter.append(xml);
 		documentXmlWriter.append("\n");
 		return this;
 	}
 
-    public DocumentoWriter writeXmlDocumentStart(String xml) throws IOException {
+    public WriteXmlFileDocxInElaborazioneLogic writeXmlDocumentStart(String xml) throws IOException {
 		writeXmlElement("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>")
 		.writeXmlElement(xml);
 		
 		return this;
     }    
 	
-	public DocumentoWriter writeXmlBodyStart(String body) throws IOException {
+	public WriteXmlFileDocxInElaborazioneLogic writeXmlBodyStart(String body) throws IOException {
 		return writeXmlElement(body);
     }
 
@@ -141,6 +144,9 @@ public class DocumentoWriter {
 	}
 
 	public void close() throws IOException {
+		currentParagrafo.empty(); 
+		paragrafi.clear(); 
+		firstDomanda = true;
 		documentXmlWriter.close();
 	}
 
