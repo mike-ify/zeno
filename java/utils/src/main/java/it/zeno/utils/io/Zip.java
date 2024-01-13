@@ -64,7 +64,7 @@ public class Zip {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		var pIO = "C:\\Users\\HP\\dev\\projects\\amici\\zeno\\apps\\java\\scuola\\verifiche\\docx\\paragraph-remix.pom\\paragraph-remix.cmd\\io";
+		String pIO = "C:\\Users\\HP\\dev\\projects\\amici\\zeno\\apps\\java\\scuola\\verifiche\\docx\\paragraph-remix.pom\\paragraph-remix.cmd\\io";
 		
 		Zip.create(
 			Paths.get(pIO + "/log"),

@@ -55,12 +55,13 @@ public class MischiaParagrafiService implements Service,AutoCloseable{
 			.copiaFileDocxInputPerElaborazione(alunno)
 			.estraiFileDocxInElaborazione();
 			
-			try(xmlReader; xmlWriter;){
-				xmlWriter.init(struttura.getPathFileDocxXMLDaScrivere());
-				xmlReader.init(struttura.getPathFileDocxXMLDaLeggere());
+			xmlWriter.init(struttura.getPathFileDocxXMLDaScrivere());
+			xmlReader.init(struttura.getPathFileDocxXMLDaLeggere());
 
-				xmlReader.logic();
-			}
+			xmlReader.logic();
+			
+			xmlReader.close();
+			xmlWriter.close();
 			
 			struttura
 			.spostaXmlElaborato(alunno);

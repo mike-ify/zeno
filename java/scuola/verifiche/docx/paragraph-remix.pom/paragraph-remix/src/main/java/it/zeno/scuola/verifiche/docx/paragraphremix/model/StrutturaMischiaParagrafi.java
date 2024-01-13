@@ -123,7 +123,7 @@ public class StrutturaMischiaParagrafi{
 	}
 	
 	public void rimuoviCartellaElaborazione() throws IOException {
-		Dir.remove(pathTemp);
+		//Dir.remove(pathTemp);
 	}
 
 	public void spostaXmlElaborato(Alunno alunno) throws IOException {
@@ -144,7 +144,7 @@ public class StrutturaMischiaParagrafi{
 	}
 	
 	private String[] preparaDatiAlunni(String[] datiAlunni) {
-        if (datiAlunni.length == 1) {
+        if (datiAlunni.length == 1 && !(datiAlunni[0] instanceof String)) {
         	datiAlunni = new String[Integer.parseInt(datiAlunni[0])];
         	StringBuilder sb = new StringBuilder();
         	String s = "alunno#";

@@ -24,4 +24,11 @@
 		<module>paragraph-remix.pom</module>
 	</modules>
 	
+	<dependencies>
+		<dependency>
+			<groupId>it.zeno</groupId>
+			<artifactId>utils</artifactId>
+			<version>B.1.0</version>
+		</dependency>
+	</dependencies>
 </project>
