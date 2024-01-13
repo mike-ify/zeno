@@ -1,9 +1,7 @@
 package it.zeno.scuola.verifiche.docx.paragraphremix.logic;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.Reader;
 import java.nio.file.Path;
 
 import javax.xml.XMLConstants;
@@ -12,12 +10,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
 
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-
-
 public class ReadXmlInputLogic implements AutoCloseable{
-//	private final static Logger LOG = LoggerFactory.getLogger(ReadXmlFileDocxInizialeLogic.class);
 	
 	private XMLEventReader originXmlReader;
 	private XMLEvent event;
@@ -65,10 +58,10 @@ public class ReadXmlInputLogic implements AutoCloseable{
 		originXmlReader.close();	
 	}
 	
-	public void init(File fileDoxXmlIniziale) throws XMLStreamException, IOException {
+	public void init(Path fileDoxXmlIniziale) throws XMLStreamException, IOException {
 		originXmlReader = xmlInputFactory
 		.createXMLEventReader(
-			new FileInputStream(fileDoxXmlIniziale)
+			new FileInputStream(fileDoxXmlIniziale.toFile())
 		);
 		
 		startXmlReader.accept(originXmlReader);

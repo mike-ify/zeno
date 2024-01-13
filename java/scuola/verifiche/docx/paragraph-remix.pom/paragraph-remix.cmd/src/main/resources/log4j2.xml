@@ -2,7 +2,7 @@
 <!-- <Configuration status="WARN" monitorInterval="30"> -->
 <Configuration status="error" monitorInterval="5"> 
     <Properties>
-        <Property name="APP_LOG_ROOT">io/log</Property>
+        <Property name="APP_LOG_ROOT">log</Property>
 		<Property name="LOG_PATTERN_FILE">%sn %d{yyyy/MM/dd HH:mm:ss,SSS} %r [%-6p] [%t] %c{3} %C{3}.%M(%F:%L) - %m%n</Property>
 		<Property name="LOG_PATTERN_CONSOLE">%d %-5p %F:%L - %m%n</Property>
 		<Property name="LOG_PATTERN_CONSOLE2">[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</Property>

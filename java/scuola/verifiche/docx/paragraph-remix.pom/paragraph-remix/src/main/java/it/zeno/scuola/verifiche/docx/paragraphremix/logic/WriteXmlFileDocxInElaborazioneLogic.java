@@ -116,7 +116,7 @@ public class WriteXmlFileDocxInElaborazioneLogic implements AutoCloseable{
     }
 
 	public void writeXmlSectPrStart(String xml) throws IOException {
-		Domanda  d;
+		Domanda d;
 		List<Paragrafo>spazi = new ArrayList<>();
 		List<Paragrafo>paragrafi2 = new ArrayList<>();
 		for(Paragrafo p : paragrafi) {

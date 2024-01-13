@@ -1,6 +1,5 @@
 package it.zeno.scuola.verifiche.docx.paragraphremix.service;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
@@ -58,7 +57,7 @@ public class MischiaParagrafiService implements Service,AutoCloseable{
 			
 			try(xmlReader; xmlWriter;){
 				xmlWriter.init(struttura.getPathFileDocxXMLDaScrivere());
-				xmlReader.init(struttura.getPathFileDocxXMLDaLeggere().toFile());
+				xmlReader.init(struttura.getPathFileDocxXMLDaLeggere());
 
 				xmlReader.logic();
 			}
