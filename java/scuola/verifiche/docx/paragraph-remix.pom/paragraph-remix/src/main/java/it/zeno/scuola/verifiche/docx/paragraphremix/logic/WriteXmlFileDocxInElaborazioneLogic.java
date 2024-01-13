@@ -38,7 +38,7 @@ public class WriteXmlFileDocxInElaborazioneLogic implements AutoCloseable{
 	}
 	public WriteXmlFileDocxInElaborazioneLogic writeXmlElement(String xml) throws IOException{
 		documentXmlWriter.append(xml);
-		documentXmlWriter.append("\n");
+		//documentXmlWriter.append("\n");
 		return this;
 	}
 

@@ -48,6 +48,8 @@ public class Domanda extends Paragrafo{
 	}
 
     public static boolean isDomanda(String pTxt) {
+    	if(pTxt.startsWith("D09"))
+    		System.out.println(3);
         return Domanda.PATTERN_CODICE_DOMANDA.matcher(pTxt).matches();
     }
 

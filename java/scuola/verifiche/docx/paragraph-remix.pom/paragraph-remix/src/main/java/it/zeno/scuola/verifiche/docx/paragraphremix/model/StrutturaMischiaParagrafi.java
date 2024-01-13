@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
@@ -163,13 +164,16 @@ public class StrutturaMischiaParagrafi{
 
 	private void setPathFileDocxElaborazioneRisultati() throws IOException {
 		
+		Dir.remove(pathBase.resolve("temp"));
 		pathTemp = Dir.mk(
 			pathBase, "temp"
 		);
 		
+		Dir.remove(pathBase.resolve("out"));
 		pathOutput = Dir.mk(
-			pathBase, "out-" + LocalDate.now()
+			pathBase, "out"
 		);
+		Dir.remove(pathTemp);
         
         String nomeDocxReadNoExt = nomeDocxRead
 		.substring(0, nomeDocxRead.indexOf('.'));

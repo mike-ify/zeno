@@ -47,7 +47,8 @@ public class Paragrafo {
 	}	
 	
 	public String toXml() {
-		return String.join("\n",xmlElements);
+		//\n
+		return String.join("",xmlElements);
 	}
 
     public void empty() {
