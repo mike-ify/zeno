@@ -12,9 +12,11 @@ public class Questionario extends Paragrafo{
 	+ "<w:sz w:val=\"24\"/><w:szCs w:val=\"24\"/></w:rPr><w:t xml:space=\"preserve\">";
 
 	private static boolean scanQuestionario = false;
-	private static Integer numeroQuestionario = 1;
+	private Integer numeroQuestionario;
 
 	private static Pattern PATTERN_QUESTIONARIO = Pattern.compile("Questionario .(\\d+)");
+
+	private static int countQuestionario = 1;
 	
 	public Questionario(Paragrafo p) {
 		super(p);
@@ -27,7 +29,7 @@ public class Questionario extends Paragrafo{
 	}
 	public void setNumeroQuestionario(String strNumeroBaseQuestionario) {
 		int numeroBaseQuestionario = Integer.parseInt(strNumeroBaseQuestionario);
-		numeroQuestionario = numeroBaseQuestionario + numeroQuestionario;
+		numeroQuestionario = numeroBaseQuestionario + countQuestionario ++;
 	}
 	public static Questionario checkQuestionario(String p) {
 		Questionario q = null;

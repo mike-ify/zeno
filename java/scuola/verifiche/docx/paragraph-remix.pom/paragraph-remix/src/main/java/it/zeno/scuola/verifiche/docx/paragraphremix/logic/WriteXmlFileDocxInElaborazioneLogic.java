@@ -47,6 +47,10 @@ public class WriteXmlFileDocxInElaborazioneLogic implements AutoCloseable{
 
 	private Domanda lastDomanda;
 	private ConsumerThrow<Alunno> alunnoConsumer;
+
+	private Questionario q;
+
+	private ConsumerThrow<WriteXmlFileDocxInElaborazioneLogic> questionarioConsumer;
 	public void setAlunnoConsumer(ConsumerThrow<Alunno> alunnoConsumer) {
 		this.alunnoConsumer = alunnoConsumer;
 	}
@@ -152,7 +156,7 @@ public class WriteXmlFileDocxInElaborazioneLogic implements AutoCloseable{
     	paragrafi.clear();
     }
 
-	public void writeXmlSectPrStart(String xml) throws IOException {
+	public void writeXmlSectPrStart(String xml) throws Exception {
 		Domanda d;
 		List<Paragrafo>intestazione = new ArrayList<>();
 		List<Paragrafo>domande = new ArrayList<>();
@@ -168,16 +172,21 @@ public class WriteXmlFileDocxInElaborazioneLogic implements AutoCloseable{
 		Collections.shuffle(domande);	
 		paragrafi = domande;
 		sanitizeParagrafi();
-		Questionario q = intestazione.stream()
+		
+		q = intestazione.stream()
 		.filter(i-> i instanceof Questionario)
 		.map(Questionario.class::cast)
 		.findFirst().get();
-		writeGrigliaRisposteCorrette(q);
+		questionarioConsumer.accept(this);
 		paragrafi = intestazione;
 		writeParagrafi();
 		paragrafi = domande;
 		writeParagrafi();
 		writeXmlElement(xml);
+	}
+	
+	public void setQConsumer(ConsumerThrow<WriteXmlFileDocxInElaborazioneLogic>qc) {
+		this.questionarioConsumer = qc;
 	}
 	private  void writeGrigliaRisposteCorrette(Questionario q) throws FileNotFoundException, IOException {
         XSSFWorkbook workbook = new XSSFWorkbook(); 
@@ -256,7 +265,6 @@ public class WriteXmlFileDocxInElaborazioneLogic implements AutoCloseable{
 					.appendXmlElement(Risposta.XML_TEXT_START)
 					.appendXmlElement(text)
 					.appendXmlElement(Paragrafo.XML_END);
-				
 				}
 			}
 		}
@@ -266,6 +274,13 @@ public class WriteXmlFileDocxInElaborazioneLogic implements AutoCloseable{
 		paragrafi.clear(); 
 		documentXmlWriter.close();
 		lastDomanda = null;
+	}
+	public List<Paragrafo> getParagrafi() {
+		return paragrafi;
+	}
+	public Questionario getQuestionario() {
+		// TODO Auto-generated method stub
+		return q;
 	}
 
 }

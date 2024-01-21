@@ -185,4 +185,8 @@ public class StrutturaMischiaParagrafi{
         .resolve(nomeDocxRead);
 	}
 
+	public Path getPathXlsxRisultati() {
+		return pathOutput.resolve("risultati.xlsx");
+	}
+
 }

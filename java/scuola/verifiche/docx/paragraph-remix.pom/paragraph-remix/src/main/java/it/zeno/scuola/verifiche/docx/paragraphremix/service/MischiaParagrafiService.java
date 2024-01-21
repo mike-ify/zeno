@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import it.zeno.scuola.verifiche.docx.paragraphremix.logic.ReadXmlInputLogic;
+import it.zeno.scuola.verifiche.docx.paragraphremix.logic.WriteXLSXGrigliaRisultatiLogic;
 import it.zeno.scuola.verifiche.docx.paragraphremix.logic.WriteXmlFileDocxInElaborazioneLogic;
 import it.zeno.scuola.verifiche.docx.paragraphremix.model.StrutturaMischiaParagrafi;
 import it.zeno.utils.interfaces.Service;
@@ -25,6 +26,8 @@ public class MischiaParagrafiService implements Service,AutoCloseable{
 	private final WriteXmlFileDocxInElaborazioneLogic xmlWriter;
 
 	private boolean fineParagrafiRead = false;
+
+	private WriteXLSXGrigliaRisultatiLogic xlsxWriter;
 	
 	public MischiaParagrafiService(
 		String strPathBase,
@@ -44,10 +47,18 @@ public class MischiaParagrafiService implements Service,AutoCloseable{
 		registerXmlEndEvents();
 		
 		xmlWriter = new WriteXmlFileDocxInElaborazioneLogic();
-
+		xlsxWriter = new WriteXLSXGrigliaRisultatiLogic(
+			struttura.getPathXlsxRisultati()
+		);
     }
 	
 	public void run() throws Exception {
+		
+		xmlWriter.setQConsumer(x -> {
+			xlsxWriter.setParagrafi(x.getParagrafi());
+			xlsxWriter.setQuestionario(x.getQuestionario());
+			xlsxWriter.logic();
+		});
 		
 		struttura.eachAlunni(alunno -> {
 			
@@ -66,6 +77,8 @@ public class MischiaParagrafiService implements Service,AutoCloseable{
 			struttura
 			.spostaXmlElaborato(alunno);
 		});
+		
+		xlsxWriter.close();
 	}
 
 	private void registerXmlStartEvents() {
