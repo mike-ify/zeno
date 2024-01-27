@@ -3,7 +3,7 @@ package it.zeno.scuola.verifiche.docx.paragraphremix.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Paragrafo {
+public class ParagrafoDocx {
 	public static final String XML_END = "</w:t></w:r></w:p>";
 	public static final String XML_TAB = "<w:r w:rsidR=\"00CE44F0\">"
 	+ "<w:rPr><w:rFonts w:ascii=\"Consolas\" w:hAnsi=\"Consolas\" w:cstheme=\"minorHAnsi\"/>"
@@ -14,40 +14,24 @@ public class Paragrafo {
 	public static final String XML_SOTTOLINEATO_GRASSETTO = "<w:r w:rsidRPr=\"0044569F\"><w:rPr><w:rFonts w:ascii=\"Consolas\" w:hAnsi=\"Consolas\" w:cstheme=\"minorHAnsi\"/><w:b/><w:bCs/><w:sz w:val=\"24\"/><w:szCs w:val=\"24\"/><w:u w:val=\"single\"/></w:rPr><w:t  xml:space=\"preserve\">";
 	
 	protected StringBuilder testo; 
-	protected List<String> xmlElements; 
-	protected List<String> xmlElementNames; 
-	protected boolean spazio; 
-	public boolean isSpazio() {
-		return spazio;
-	}
-	public Paragrafo(Paragrafo currentParagrafo, boolean b) {
-		this(currentParagrafo);
-		spazio = b;
-	}
+	protected StringBuilder xml; 
 	
-	public Paragrafo(Paragrafo p) {
-		xmlElementNames = new ArrayList<>(p.xmlElementNames);
-		xmlElements = new ArrayList<>(p.xmlElements);
+	public ParagrafoDocx(ParagrafoDocx p) {
+		xml = new StringBuilder(p.xml);
 		testo = new StringBuilder(p.testo);
 	}
 
-	public Paragrafo() {
-		xmlElementNames = new ArrayList<>();
-		xmlElements = new ArrayList<>();
+	public ParagrafoDocx() {
+		xml = new StringBuilder();
 		testo = new StringBuilder();
 	}
-	public Paragrafo appendTxt(String txt) {
-		this.testo.append(txt);
+	public ParagrafoDocx appendTxt(String txt) {
+		testo.append(txt);
 		return this;
 	}
 	
-	public Paragrafo appendXmlElementName(String xmlElementName) {
-		this.xmlElementNames.add(xmlElementName);
-		return this;
-	}	
-
-	public Paragrafo appendXmlElement(String xmlElement) {
-		this.xmlElements.add(xmlElement);
+	public ParagrafoDocx appendXml(CharSequence xml) {
+		this.xml.append(xml);
 		return this;
 	}
 	
@@ -56,24 +40,17 @@ public class Paragrafo {
 	}	
 	
 	public String toXml() {
-		StringBuilder sb = new StringBuilder();
-		for(String xml : xmlElements) {
-			if(xml.equals(" "))
-				System.out.println(4);
-			sb.append(xml);
-		}return sb.toString();			
+		return xml.toString();			
 	}
 
-    public Paragrafo empty() {
-		xmlElements.clear();
-		xmlElementNames.clear();
+    public ParagrafoDocx empty() {
+		xml.setLength(0);
 		testo.setLength(0);
 		return this;
     }
     
-    public Paragrafo setTesto(String testo) {
+    public ParagrafoDocx setTesto(String testo) {
 		this.testo.append(testo);
 		return this;
 	}
-
 }

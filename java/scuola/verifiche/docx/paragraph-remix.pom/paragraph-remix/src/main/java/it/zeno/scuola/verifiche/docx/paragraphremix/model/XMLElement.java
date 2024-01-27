@@ -6,7 +6,7 @@ import javax.xml.stream.events.XMLEvent;
 
 import it.zeno.scuola.verifiche.docx.utils.XML;
 
-abstract class XMLElement {
+public abstract class XMLElement {
 	protected XMLEventReader xmlReader;
 	protected String name;
 	protected String xml;

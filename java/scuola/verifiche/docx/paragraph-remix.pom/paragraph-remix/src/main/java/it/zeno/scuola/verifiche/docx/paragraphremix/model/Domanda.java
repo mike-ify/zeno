@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import it.zeno.utils.Str;
 
-public class Domanda extends Paragrafo{
+
+public class Domanda extends ParagrafoDocx{
 
 	public final static Pattern PATTERN_CODICE_DOMANDA = Pattern.compile("^(D\\d{2}):.+$");
 
@@ -24,7 +26,7 @@ public class Domanda extends Paragrafo{
 	private String testoDomanda;
 	private List<Risposta> risposte; 
 		
-	public Domanda(Paragrafo p) {
+	public Domanda(ParagrafoDocx p) {
 		super(p);
 		risposte = new ArrayList<>();
 	}
@@ -51,7 +53,7 @@ public class Domanda extends Paragrafo{
 		return toText();
 	}
 
-	public int addRisposta(Paragrafo currentParagrafo) {
+	public int addRisposta(ParagrafoDocx currentParagrafo) {
 		int ord = risposte.size();
 		Risposta r = new Risposta(currentParagrafo, this, ord);
 		risposte.add(r);
@@ -71,9 +73,43 @@ public class Domanda extends Paragrafo{
 		return this;
 	}
 
-	public Paragrafo setCodiceRiordinato(String codice) {
+	public ParagrafoDocx setCodiceRiordinato(String codice) {
 		codiceRiordinatoDomanda = codice;
 		return this;
 	}
-	
+
+	public static void sanitize(Domanda domanda, int domandaNu) {
+		
+		String text = domanda.toText();
+		
+		int tabi = text.indexOf('\t');
+		
+		StringBuilder codice = new StringBuilder(text.substring(0,tabi))
+		.append('D')
+		.append(domandaNu < 10 ? '0' : Str.VOID)
+		.append(domandaNu)
+		.append(':');
+		
+		text = text.substring(tabi + 1);
+		
+		domanda
+		.empty();
+		
+		domanda
+		.setCodiceRiordinato(codice.toString())
+		.setTesto(text)
+		.appendXml(Domanda.XML_START)
+		.appendXml(codice)
+		.appendXml(ParagrafoDocx.XML_TEXT_END)
+		.appendXml(ParagrafoDocx.XML_TAB)
+		.appendXml(Domanda.XML_TEXT_START)
+		.appendXml(text)
+		.appendXml(ParagrafoDocx.XML_END);
+		
+		Risposta risposta;
+		for(int i = 0, len = domanda.getRisposte().size(); i < len; i++) {
+			risposta = domanda.getRisposte().get(i);
+			Risposta.sanitize(risposta, i);
+		}
+	}	
 }

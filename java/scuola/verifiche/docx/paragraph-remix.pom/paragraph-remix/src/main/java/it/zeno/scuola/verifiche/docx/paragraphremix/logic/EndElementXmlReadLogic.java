@@ -6,24 +6,14 @@ import javax.xml.stream.events.XMLEvent;
 import it.zeno.scuola.verifiche.docx.paragraphremix.model.EndXMLElement;
 import it.zeno.utils.functions.ConsumerThrow;
 
-public class EndElementXmlReadLogic{
+public class EndElementXmlReadLogic extends ElementXmlReadLogic{
 	
 	private EndXMLElement endElement;
 	
 	private ConsumerThrow<EndXMLElement>endPConsumer;
-//	destXmlWriter.addXmlParagrafoEndLogic(xml);
 	private ConsumerThrow<EndXMLElement>endSectPrConsumer;
-//	destXmlWriter.writeXmlElement(xml);
-	
 	private ConsumerThrow<EndXMLElement>endBodyConsumer;
-//	destXmlWriter.writeXmlElement(xml);
 	private ConsumerThrow<EndXMLElement>endDocumentConsumer;
-//	destXmlWriter.writeXmlElement(xml);
-	private ConsumerThrow<EndXMLElement>endDefaultConsumer;
-//	if(StartElementXmlReadLogic.secpr)
-//		destXmlWriter.writeXmlElement(xml);
-//	else
-//		destXmlWriter.appendXmlElement(name,xml);
 
 	public void logic() throws Exception {
 
@@ -46,7 +36,7 @@ public class EndElementXmlReadLogic{
 			break;
 			
 			default: 
-				endDefaultConsumer.accept(endElement);
+				defaultConsumer.accept(endElement);
 			break;
 		}
 	}
@@ -71,16 +61,11 @@ public class EndElementXmlReadLogic{
 		return this;
 	}
 
-	public EndElementXmlReadLogic setEndDocumentConsumer(ConsumerThrow<EndXMLElement> endDocumentConsumer) {
-		this.endDocumentConsumer = endDocumentConsumer;
+	public EndElementXmlReadLogic setEndElementConsumer(ConsumerThrow<EndXMLElement> end) {
+		this.endElementConsumer = end;
 		return this;
 	}
 
-	public EndElementXmlReadLogic setEndDefaultConsumer(ConsumerThrow<EndXMLElement> endDefaultConsumer) {
-		this.endDefaultConsumer = endDefaultConsumer;
-		return this;
-	}
-	
 	public EndElementXmlReadLogic setEvent(XMLEvent event) {
 		endElement.accept(event);
 		return this;
@@ -89,5 +74,5 @@ public class EndElementXmlReadLogic{
 		endElement = new EndXMLElement(input);
 		return this;
 	}
-	
+
 }

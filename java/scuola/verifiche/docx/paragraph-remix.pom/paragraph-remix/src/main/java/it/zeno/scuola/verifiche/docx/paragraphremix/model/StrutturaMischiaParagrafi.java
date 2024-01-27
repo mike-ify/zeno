@@ -5,11 +5,8 @@ import java.lang.reflect.MalformedParametersException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import it.zeno.utils.functions.ConsumerThrow;
@@ -18,7 +15,7 @@ import it.zeno.utils.io.FILE;
 import it.zeno.utils.io.Zip;
 
 public class StrutturaMischiaParagrafi{
-	private List<Alunno> alunni;
+	private List<AlunnoParagrafoDocx> alunni;
 	
 	private String strPathBase;
 	private String nomeDocxRead;
@@ -58,7 +55,7 @@ public class StrutturaMischiaParagrafi{
 	public StrutturaMischiaParagrafi setAlunni(String[]alunni) throws IOException {
 		this.alunni = Arrays
 		.stream(preparaDatiAlunni(alunni))
-		.map(Alunno::new)
+		.map(AlunnoParagrafoDocx::new)
 		.collect(Collectors.toList());
 		
 		preparaCartellePerElaborazioneFileDocx();
@@ -67,14 +64,14 @@ public class StrutturaMischiaParagrafi{
 	}
 	
 	//usati nell'iterazione del numero di alunni, creare interfaccia MischiaParagrafiEach
-	public StrutturaMischiaParagrafi eachAlunni(ConsumerThrow<Alunno>alunnoConsumer) throws Exception {
+	public StrutturaMischiaParagrafi eachAlunni(ConsumerThrow<AlunnoParagrafoDocx>alunnoConsumer) throws Exception {
 		
-		for(Alunno alunno : alunni)
+		for(AlunnoParagrafoDocx alunno : alunni)
 			alunnoConsumer.accept(alunno);
 		return this;
 	}
 	
-	public StrutturaMischiaParagrafi copiaFileDocxInputPerElaborazione(Alunno alunno) throws IOException {
+	public StrutturaMischiaParagrafi copiaFileDocxInputPerElaborazione(AlunnoParagrafoDocx alunno) throws IOException {
 		nomeUnzippedDocxWrite = nomeDocxRead
 		.substring(0,nomeDocxRead.lastIndexOf('.'))
 		.concat("-")
@@ -126,7 +123,7 @@ public class StrutturaMischiaParagrafi{
 		//Dir.remove(pathTemp);
 	}
 
-	public void spostaXmlElaborato(Alunno alunno) throws IOException {
+	public void spostaXmlElaborato(AlunnoParagrafoDocx alunno) throws IOException {
 		Zip.create(
 			pathUnzippedDocxWrite,
 			pathOutput

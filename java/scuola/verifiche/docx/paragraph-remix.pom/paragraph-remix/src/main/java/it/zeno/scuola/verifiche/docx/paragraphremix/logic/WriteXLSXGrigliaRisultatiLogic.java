@@ -21,8 +21,8 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import it.zeno.scuola.verifiche.docx.paragraphremix.model.Domanda;
-import it.zeno.scuola.verifiche.docx.paragraphremix.model.Paragrafo;
-import it.zeno.scuola.verifiche.docx.paragraphremix.model.Questionario;
+import it.zeno.scuola.verifiche.docx.paragraphremix.model.ParagrafoDocx;
+import it.zeno.scuola.verifiche.docx.paragraphremix.model.QuestionarioParagrafoDocx;
 import it.zeno.scuola.verifiche.docx.paragraphremix.model.Risposta;
 
 public class WriteXLSXGrigliaRisultatiLogic implements AutoCloseable{
@@ -32,8 +32,8 @@ public class WriteXLSXGrigliaRisultatiLogic implements AutoCloseable{
 	private CellStyle style;
 	private Font font;
 	
-	private List<Paragrafo> paragrafi;
-	private Questionario questionario;
+	private List<ParagrafoDocx> paragrafi;
+	private QuestionarioParagrafoDocx questionario;
 	
 	private Path path;
 	private int rowid;
@@ -42,11 +42,11 @@ public class WriteXLSXGrigliaRisultatiLogic implements AutoCloseable{
 	private int cellid;
 	private Row rownu;
 
-	public void setQuestionario(Questionario questionario) {
+	public void setQuestionario(QuestionarioParagrafoDocx questionario) {
 		this.questionario = questionario;
 	}
 	
-	public void setParagrafi(List<Paragrafo> paragrafi) {
+	public void setParagrafi(List<ParagrafoDocx> paragrafi) {
 		this.paragrafi = paragrafi;
 	}
 
@@ -96,7 +96,7 @@ public class WriteXLSXGrigliaRisultatiLogic implements AutoCloseable{
 		center.setBorderLeft(BorderStyle.THIN);
 		center.setBorderRight(BorderStyle.THIN);
 		
-		for (Paragrafo p : paragrafi) {
+		for (ParagrafoDocx p : paragrafi) {
 			Domanda d = (Domanda) p;
 			List<String> s = new ArrayList<>();
 			for (Risposta r : d.getRisposte().stream().filter(r -> r.isValid()).collect(Collectors.toList())) {

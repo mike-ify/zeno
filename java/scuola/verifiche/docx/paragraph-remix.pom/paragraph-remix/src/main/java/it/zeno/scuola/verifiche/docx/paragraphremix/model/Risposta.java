@@ -3,7 +3,9 @@ package it.zeno.scuola.verifiche.docx.paragraphremix.model;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Risposta extends Paragrafo{
+import it.zeno.utils.Str;
+
+public class Risposta extends ParagrafoDocx{
 
 	private final static Pattern PATTERN_RISPOSTA_START = Pattern.compile("^[A-Z]\\[(\\s|X)");
 	public final static Pattern PATTERN_CODICE_RISPOSTA_VALIDA = Pattern.compile("^[A-Z]\\[X");
@@ -17,11 +19,10 @@ public class Risposta extends Paragrafo{
 			+ "</w:rPr></w:pPr><w:proofErr w:type='gramStart'></w:proofErr>"
 			+ "<w:r w:rsidRPr='003135E8'><w:rPr><w:rFonts w:hAnsi='Consolas' w:cstheme='minorHAnsi' w:ascii='Consolas'></w:rFonts>"
 			+ "<w:sz w:val='24'></w:sz><w:szCs w:val='24'></w:szCs>"
-			+ "</w:rPr><w:t  xml:space=\"preserve\">";
+			+ "</w:rPr><w:t xml:space=\"preserve\">";
 	public static final String XML_TEXT_START = "<w:r w:rsidRPr=\"003135E8\"><w:rPr><w:rFonts w:ascii=\"Consolas\" w:hAnsi=\"Consolas\" w:cstheme=\"minorHAnsi\"/>"
 			+ "<w:sz w:val=\"24\"/><w:szCs w:val=\"24\"/></w:rPr><w:t xml:space=\"preserve\">";
-	private static char[] alfabeto;
-
+	
 	private Domanda parent;
 	private int ordine;
 	private String codiceRisposta;
@@ -37,7 +38,7 @@ public class Risposta extends Paragrafo{
 		return PATTERN_RISPOSTA.matcher(testoParagrafo);
 	}
 
-	public Risposta(Paragrafo p,Domanda d, int o) {
+	public Risposta(ParagrafoDocx p,Domanda d, int o) {
 		super(p);
 		parent = d;
 		ordine = o;
@@ -84,7 +85,7 @@ public class Risposta extends Paragrafo{
 		this.valid = valid;
 	}
 
-    public static String tryRimuoviCrocetta(Paragrafo currentParagrafo, String testo) {
+    public static String tryRimuoviCrocetta(ParagrafoDocx currentParagrafo, String testo) {
 		if(PATTERN_CODICE_RISPOSTA_VALIDA.matcher(currentParagrafo.toText()).matches()) {
 			Matcher m = PATTERN_CODICE_RISPOSTA_COMPOSE.matcher(testo);
 			StringBuilder r = new StringBuilder();
@@ -106,17 +107,41 @@ public class Risposta extends Paragrafo{
 		return codiceRiordinatoRisposta;
 	}
 
-	public static char getAalfabeto(int x) {
-		if(alfabeto == null) {
-			alfabeto = new char[26];
-	        for (int i = 0; i < 26; i++) 
-	            alfabeto[i] = (char) ('A' + i);
-		}
-		return alfabeto[x];
-	}
-
 	public String getLettera() {
 		return Character.toString(codiceRiordinatoRisposta.charAt(0));
+	}
+
+	public static void sanitize(Risposta risposta, int rispostaNu) {
+
+		String text = risposta.toText();
+		
+		int tabi = text.indexOf('\t');
+		String codice = text.substring(0,tabi);
+		
+		risposta
+		.empty();
+		
+		risposta
+		.setCodiceRisposta(codice);
+		
+		risposta
+		.setCodiceRiordinatoRisposta(
+			Character.toString(
+				Str.getAalfabeto(rispostaNu)
+			) + "[ ]"
+		);
+		
+		text = text.substring(tabi + 1);
+		
+		risposta
+		.appendXml(Risposta.XML_START)
+		.appendXml(risposta.getCodiceRiordinatoRisposta())
+		.appendXml(ParagrafoDocx.XML_TEXT_END)
+		.appendXml(ParagrafoDocx.XML_TAB)
+		.appendXml(Risposta.XML_TEXT_START)
+		.appendXml(text)
+		.appendXml(ParagrafoDocx.XML_END);
+				
 	}
 
 }

@@ -1,19 +1,11 @@
 package it.zeno.scuola.verifiche.docx.paragraphremix.model;
 
 import java.text.DateFormat;
-import java.text.Format;
-import java.text.MessageFormat;
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.Locale;
 
-import org.apache.logging.log4j.message.StringFormattedMessage;
 
-import it.zeno.utils.functions.ConsumerThrow;
-
-public class Alunno extends Paragrafo{
+public class AlunnoParagrafoDocx extends ParagrafoDocx{
 	public static final String XML_START = "<w:p w14:paraId=\"03E5D41E\" w14:textId=\"759FB500\" w:rsidR=\"00CE44F0\" w:rsidRPr=\"007F4FF0\" w:rsidRDefault=\"00CE44F0\" w:rsidP=\"00CE44F0\">"
 	+ "<w:pPr><w:spacing w:before=\"40\" w:after=\"0\" w:line=\"240\" w:lineRule=\"auto\"/>"
 	+ "<w:ind w:left=\"993\" w:hanging=\"993\"/><w:rPr><w:rFonts w:ascii=\"Consolas\" w:hAnsi=\"Consolas\" w:cstheme=\"minorHAnsi\"/>"
@@ -25,7 +17,7 @@ public class Alunno extends Paragrafo{
 	private String classe;
 	private String data;
 	
-	public Alunno(String nomeCognomeSeparatiConHash) {
+	public AlunnoParagrafoDocx(String nomeCognomeSeparatiConHash) {
 		setDataNow();
 		int indexOfHash = nomeCognomeSeparatiConHash.indexOf('#');
 		nome = nomeCognomeSeparatiConHash.substring(0,indexOfHash);
@@ -38,32 +30,31 @@ public class Alunno extends Paragrafo{
 		.format(new Date());
 	}
 
-	public Alunno(Paragrafo p, ConsumerThrow<Alunno> alunnoConsumer) throws Exception {
+	public AlunnoParagrafoDocx(ParagrafoDocx p) throws Exception {
 		super(p);
 		setDataNow();
-		alunnoConsumer.accept(this);
 		String txt = testo.toString().replace('\t', ' ');
 		txt = new StringBuilder("Cognome: ")
-			.append(Paragrafo.XML_TEXT_END)
-			.append(Paragrafo.XML_SOTTOLINEATO_GRASSETTO).append(cognome)
-			.append(Paragrafo.XML_TEXT_END)
+			.append(ParagrafoDocx.XML_TEXT_END)
+			.append(ParagrafoDocx.XML_SOTTOLINEATO_GRASSETTO).append(cognome)
+			.append(ParagrafoDocx.XML_TEXT_END)
 //			
-			.append(Paragrafo.XML_TEXT_START)
+			.append(ParagrafoDocx.XML_TEXT_START)
 			.append(", Nome: ")
-			.append(Paragrafo.XML_TEXT_END)
-			.append(Paragrafo.XML_SOTTOLINEATO_GRASSETTO).append(nome)
-			.append(Paragrafo.XML_TEXT_END)
+			.append(ParagrafoDocx.XML_TEXT_END)
+			.append(ParagrafoDocx.XML_SOTTOLINEATO_GRASSETTO).append(nome)
+			.append(ParagrafoDocx.XML_TEXT_END)
 //			
-			.append(Paragrafo.XML_TEXT_START)
+			.append(ParagrafoDocx.XML_TEXT_START)
 			.append(", Classe: ")
-			.append(Paragrafo.XML_TEXT_END)
-			.append(Paragrafo.XML_SOTTOLINEATO_GRASSETTO).append(classe)
-			.append(Paragrafo.XML_TEXT_END)
+			.append(ParagrafoDocx.XML_TEXT_END)
+			.append(ParagrafoDocx.XML_SOTTOLINEATO_GRASSETTO).append(classe)
+			.append(ParagrafoDocx.XML_TEXT_END)
 //			
-			.append(Paragrafo.XML_TEXT_START)
+			.append(ParagrafoDocx.XML_TEXT_START)
 			.append(", Data: ")
-			.append(Paragrafo.XML_TEXT_END)
-			.append(Paragrafo.XML_SOTTOLINEATO_GRASSETTO).append(data)
+			.append(ParagrafoDocx.XML_TEXT_END)
+			.append(ParagrafoDocx.XML_SOTTOLINEATO_GRASSETTO).append(data)
 		.toString();
 		empty();
 		setTesto(txt);

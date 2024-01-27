@@ -6,7 +6,7 @@ import javax.xml.stream.events.XMLEvent;
 import it.zeno.scuola.verifiche.docx.paragraphremix.model.StartXMLElement;
 import it.zeno.utils.functions.ConsumerThrow;
 
-public class StartXmlElementReadLogic{
+public class StartXmlElementReadLogic extends ElementXmlReadLogic{
 	
 	private StartXMLElement startElement;
 	
@@ -15,7 +15,6 @@ public class StartXmlElementReadLogic{
 	private ConsumerThrow<StartXMLElement>startTextConsumer;
 	private ConsumerThrow<StartXMLElement>startTabConsumer;
 	private ConsumerThrow<StartXMLElement>startSectPrConsumer;
-	private ConsumerThrow<StartXMLElement>startDefaultConsumer;
 	
 	public void logic() throws Exception {
 		
@@ -42,7 +41,7 @@ public class StartXmlElementReadLogic{
 				break;
 			
 			default: 
-				startDefaultConsumer.accept(startElement);
+				defaultConsumer.accept(startElement);
 				break;
 		}
 	}
@@ -68,10 +67,6 @@ public class StartXmlElementReadLogic{
 	}
 	public StartXmlElementReadLogic setStartSectPrConsumer(ConsumerThrow<StartXMLElement> startSectPrConsumerThrow) {
 		this.startSectPrConsumer = startSectPrConsumerThrow;
-		return this;
-	}
-	public StartXmlElementReadLogic setStartDefaultConsumer(ConsumerThrow<StartXMLElement> startDefaultConsumerThrow) {
-		this.startDefaultConsumer = startDefaultConsumerThrow;
 		return this;
 	}
 	public StartXmlElementReadLogic setEvent(XMLEvent event) {
