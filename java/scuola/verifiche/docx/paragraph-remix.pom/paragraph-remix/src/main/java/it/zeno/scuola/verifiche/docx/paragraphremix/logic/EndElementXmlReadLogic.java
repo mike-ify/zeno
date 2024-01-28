@@ -11,28 +11,20 @@ public class EndElementXmlReadLogic extends ElementXmlReadLogic{
 	private EndXMLElement endElement;
 	
 	private ConsumerThrow<EndXMLElement>endPConsumer;
-	private ConsumerThrow<EndXMLElement>endSectPrConsumer;
-	private ConsumerThrow<EndXMLElement>endBodyConsumer;
-	private ConsumerThrow<EndXMLElement>endDocumentConsumer;
+	private ConsumerThrow<EndXMLElement> endElementConsumer;
 
 	public void logic() throws Exception {
 
 		switch(endElement.getName()) {
-		
-			case "p":
-				endPConsumer.accept(endElement);
-			break;
 			
 			case "sectPr":
-				endSectPrConsumer.accept(endElement);
+			case "body":
+			case "document":
+				endElementConsumer.accept(endElement);
 			break;
 			
-			case "body":
-				endBodyConsumer.accept(endElement);
-			break;
-
-			case "document":
-				endDocumentConsumer.accept(endElement);
+			case "p":
+				endPConsumer.accept(endElement);
 			break;
 			
 			default: 
@@ -48,16 +40,6 @@ public class EndElementXmlReadLogic extends ElementXmlReadLogic{
 
 	public EndElementXmlReadLogic setEndPConsumer(ConsumerThrow<EndXMLElement> endPConsumer) {
 		this.endPConsumer = endPConsumer;
-		return this;
-	}
-
-	public EndElementXmlReadLogic setEndSectPrConsumer(ConsumerThrow<EndXMLElement> endSectPrConsumer) {
-		this.endSectPrConsumer = endSectPrConsumer;
-		return this;
-	}
-
-	public EndElementXmlReadLogic setEndBodyConsumer(ConsumerThrow<EndXMLElement> endBodyConsumer) {
-		this.endBodyConsumer = endBodyConsumer;
 		return this;
 	}
 
