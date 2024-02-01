@@ -1,7 +1,11 @@
 package it.zeno.utils.base;
 
+
 public class Str {
-	public static final String VOID = "";
+	static public interface consts{
+		String VOID = "";
+		String COMMA = ",";
+	}
 	public static char[] alfabeto;
 	
 	public static char getAalfabeto(int x) {
@@ -17,4 +21,5 @@ public class Str {
 		
 		return alfabeto[x];
 	}
+	
 }

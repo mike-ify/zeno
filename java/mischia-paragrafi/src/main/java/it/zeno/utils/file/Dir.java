@@ -1,4 +1,4 @@
-package it.zeno.utils.io;
+package it.zeno.utils.file;
 
 import java.io.File;
 import java.io.FileInputStream;

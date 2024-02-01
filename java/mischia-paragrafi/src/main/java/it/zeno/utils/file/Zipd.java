@@ -1,4 +1,4 @@
-package it.zeno.utils.io;
+package it.zeno.utils.file;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,7 +11,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-public class Zip {
+public class Zipd {
 	
 	public static void extract(Path zipFilePath, Path destDir) {
 		File dir = destDir.toFile();
@@ -54,7 +54,7 @@ public class Zip {
 	              ZipEntry zipEntry = new ZipEntry(dirDaComprimere.relativize(path).toString());
 	              try {
 	                  zs.putNextEntry(zipEntry);
-	                  Files.copy(path, zs);
+	                  //Files.copy(path, zs);
 	                  zs.closeEntry();
 	            } catch (IOException e) {
 	                System.err.println(e);
@@ -66,7 +66,7 @@ public class Zip {
 	public static void main(String[] args) throws IOException {
 		String pIO = "C:\\Users\\HP\\dev\\projects\\amici\\zeno\\apps\\java\\scuola\\verifiche\\docx\\paragraph-remix.pom\\paragraph-remix.cmd\\io";
 		
-		Zip.create(
+		Zipd.create(
 			Paths.get(pIO + "/log"),
 			Paths.get(pIO + "/log.zip")
 		);
