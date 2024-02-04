@@ -42,7 +42,11 @@ public class ConfQuestDocx extends BlockImpl implements ProducesData<QuestDocx>{
 			if(args.isMoreThanOne())
 				data.setStudentiNu(Integer.parseInt(args.second()));
 			
-			return isValidPath();
+			try {
+				return isValidPath();
+			} catch (IOException e) {
+				throw Log.error(e);
+			}
 		}
 		
 		//caso che non trova parametri nell'applicazione
@@ -84,9 +88,19 @@ public class ConfQuestDocx extends BlockImpl implements ProducesData<QuestDocx>{
 		return false;
 	}
 
-	private boolean isValidPath() {
+	private boolean isValidPath() throws IOException {
 		if(data.getStrDirDocxInput() != null) {
-			data.setDirDocxInput(Paths.get(data.getStrDirDocxInput()));
+			Path p = Paths.get(data.getStrDirDocxInput());
+			if(Files.isDirectory(p)) {
+				Optional<Path> opt = Files.walk(p)
+				.filter(p1 -> p1.getFileName().toString().endsWith(".docx"))
+				.findAny();
+				if(opt.isEmpty())
+					return false;
+				p = opt.get();
+				data.setStrDirDocxInput(p.toString());
+			}
+			data.setDirDocxInput(p);
 			return Files.exists(data.getDirDocxInput());
 		}
 		return false;
