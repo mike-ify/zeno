@@ -18,10 +18,11 @@ abstract public class DBImpl implements DB{
 		this.host = Get.prop(label + ".db.host"); 
 	}
 	
-	public void conf() {
+	public boolean conf() {
 		try {
 			Class.forName(Get.prop(label + ".jdbc.driver"));
 			url = "jdbc:" + dialect + (':' + host);
+			return true;
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
 		}
