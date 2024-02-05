@@ -11,7 +11,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-public class Zipd {
+import it.zeno.utils.base.Log;
+
+public class Zip {
 	
 	public static void extract(Path zipFilePath, Path destDir) {
 		File dir = destDir.toFile();
@@ -40,7 +42,7 @@ public class Zipd {
 			zis.close();
 			fis.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw Log.error(e);
 		}
 
 	}
@@ -66,7 +68,7 @@ public class Zipd {
 	public static void main(String[] args) throws IOException {
 		String pIO = "C:\\Users\\HP\\dev\\projects\\amici\\zeno\\apps\\java\\scuola\\verifiche\\docx\\paragraph-remix.pom\\paragraph-remix.cmd\\io";
 		
-		Zipd.create(
+		create(
 			Paths.get(pIO + "/log"),
 			Paths.get(pIO + "/log.zip")
 		);

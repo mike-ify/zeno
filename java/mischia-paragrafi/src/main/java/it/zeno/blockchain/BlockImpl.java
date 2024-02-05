@@ -20,4 +20,6 @@ public abstract class BlockImpl implements Block{
 	}
 	
 	protected void init() {}
+	
+	
 }

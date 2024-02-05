@@ -1,5 +1,8 @@
 package it.zeno.blockchain;
 
+import java.lang.reflect.Field;
+
+import it.zeno.utils.base.Log;
 import it.zeno.utils.pattern.Configurable;
 import it.zeno.utils.pattern.Startable;
 
@@ -24,7 +27,22 @@ public interface Block extends Configurable,Startable{
 	default void exec() {}
 	default void output() {}
 	default boolean validateOutput() {return true;}
-	default void success() {}
+	default void success() {
+		try {
+			Field field = getClass()
+			.getDeclaredField("next");
+			field.setAccessible(true);
+			
+			Object ctx = field.get(this);
+			
+			ctx.getClass()
+			.getMethod("start")
+			.invoke(ctx);
+			
+		} catch (Exception e) {
+			Log.error(e);
+		}
+	}
 	default void fail(State state) {}
 	
 	State state(State state);
@@ -34,6 +52,7 @@ public interface Block extends Configurable,Startable{
 	
 	@Override
 	default void start() {
+		Log.info("start {}",getClass().getAnnotation(BlockChain.class).value());
 		if(conf()) {
 			input();
 			if(validateInput()) {

@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Optional;
 
-import javax.enterprise.inject.spi.CDI;
 import javax.inject.Inject;
 
 import it.zeno.blockchain.Args;
@@ -16,12 +14,9 @@ import it.zeno.blockchain.BlockChain;
 import it.zeno.blockchain.BlockImpl;
 import it.zeno.scuola.verifiche.word.model.QuestDocx;
 import it.zeno.utils.base.Log;
-import it.zeno.utils.pattern.ProducesData;
-import jdk.internal.classfile.Annotation;
-import jdk.internal.classfile.AnnotationElement;
 
 @BlockChain
-public class ConfQuestDocx extends BlockImpl implements ProducesData<QuestDocx>{
+public class QuestDocxConf extends BlockImpl{
 	@Inject
 	private QuestDocx data;
 	
@@ -37,7 +32,7 @@ public class ConfQuestDocx extends BlockImpl implements ProducesData<QuestDocx>{
 		//caso parametri passati all'applicazione
 		if(args.validate()) {
 			
-			data.setStrDirDocxInput(args.first());
+			data.setDirDocxInput(args.first());
 			
 			if(args.isMoreThanOne())
 				data.setStudentiNu(Integer.parseInt(args.second()));
@@ -52,27 +47,27 @@ public class ConfQuestDocx extends BlockImpl implements ProducesData<QuestDocx>{
 		//caso che non trova parametri nell'applicazione
 		try {
 			//1. cerca il file docx di input nella cartella corrente
-			if(cercaDir(""))
+			if(cercaFileDocx(""))
 				return true;
 
 			//2. cerca nelle variabili di ambiente la dir contenente il docx
 			String envDir = System.getenv("QUEST_DOCX_HOME");
-			if(envDir != null) 
-				return cercaDir(envDir);
+			if(envDir != null && cercaFileDocx(envDir)) 
+				return true;
 			
 			//3. cerca nelle property jvm
 			envDir = System.getProperty("QUEST_DOCX_HOME");
-			if(envDir != null) 
-				return cercaDir(envDir);
+			if(envDir != null && cercaFileDocx(envDir)) 
+				return true;
 			
 		} catch (IOException e) {
 			Log.error(e);	
 		}
 		
-		return false;
+		throw new RuntimeException("File di input non trovato");
 	}
 	
-	private boolean cercaDir(String dir) throws IOException {
+	private boolean cercaFileDocx(String dir) throws IOException {
 		Optional<Path> opt = Files
 		.walk(Paths.get(dir))
 		.filter(p -> !Files.isDirectory(p))
@@ -80,8 +75,7 @@ public class ConfQuestDocx extends BlockImpl implements ProducesData<QuestDocx>{
 		.findAny();
 		
 		if(opt.isPresent()) {
-			data.setDirDocxInput(opt.get());
-			data.setStrDirDocxInput(data.getDirDocxInput().toString());
+			data.setFileDocxOrigin(opt.get());
 			return true;
 		}
 		
@@ -90,30 +84,17 @@ public class ConfQuestDocx extends BlockImpl implements ProducesData<QuestDocx>{
 
 	private boolean isValidPath() throws IOException {
 		if(data.getStrDirDocxInput() != null) {
-			Path p = Paths.get(data.getStrDirDocxInput());
-			if(Files.isDirectory(p)) {
-				Optional<Path> opt = Files.walk(p)
+			if(Files.isDirectory(data.getDirDocxInput())) {
+				Optional<Path> opt = Files.walk(data.getDirDocxInput())
 				.filter(p1 -> p1.getFileName().toString().endsWith(".docx"))
 				.findAny();
 				if(opt.isEmpty())
 					return false;
-				p = opt.get();
-				data.setStrDirDocxInput(p.toString());
+				data.setFileDocxOrigin(opt.get());
 			}
-			data.setDirDocxInput(p);
-			return Files.exists(data.getDirDocxInput());
+			return Files.exists(data.getDirDocxInput()) && 
+			Files.exists(data.getFileDocxInput());
 		}
 		return false;
 	}
-	
-	@Override
-	public QuestDocx produce() {
-		return data;
-	}
-	
-	@Override
-	public void success() {
-		next.start();
-	}
-
 }

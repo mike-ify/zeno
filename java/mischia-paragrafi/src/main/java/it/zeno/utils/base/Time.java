@@ -25,7 +25,7 @@ public class Time {
 		Temporal start = (Temporal) Get.prop().get(name);
 		Instant end = start(name);
 		long ms = Duration.between(start, end).toMillis();
-		System.out.println("diff ms " + ms);
+		//System.out.println("diff ms " + ms);
 		return ms;
 	}
 
