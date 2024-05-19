@@ -21,6 +21,7 @@ public class QuestDocx {
 	private Path fileDocxOrigin;
 	private String nameFileDocxElab;
 	private String nameFileDocxElabNoExt;
+	private Path fileXMLInput;
 	
 
 	public QuestDocx() {
@@ -102,6 +103,14 @@ public class QuestDocx {
 	}
 	public Integer nextStudent() {
 		return currentStudentNu++;
+	}
+
+	public void setFileXMLInput(Path p) {
+		fileXMLInput = p;
+	}
+	
+	public Path getFileXMLInput() {
+		return fileXMLInput;
 	}
 
 

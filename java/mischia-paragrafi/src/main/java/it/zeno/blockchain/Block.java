@@ -52,7 +52,7 @@ public interface Block extends Configurable,Startable{
 	
 	@Override
 	default void start() {
-		Log.info("start {}",getClass().getAnnotation(BlockChain.class).value());
+		Log.info("start {}",getClass().getSimpleName());
 		if(conf()) {
 			input();
 			if(validateInput()) {

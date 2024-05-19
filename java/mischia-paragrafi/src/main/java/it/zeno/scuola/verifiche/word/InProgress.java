@@ -4,7 +4,7 @@ import it.zeno.blockchain.BlockChain;
 import it.zeno.blockchain.BlockImpl;
 import it.zeno.utils.base.Log;
 
-@BlockChain("?")
+@BlockChain("in progress...")
 public class InProgress extends BlockImpl{
 	
 	@Override

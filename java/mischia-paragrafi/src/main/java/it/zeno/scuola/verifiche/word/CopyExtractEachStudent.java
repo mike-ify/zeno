@@ -12,19 +12,19 @@ import it.zeno.utils.base.Log;
 import it.zeno.utils.file.FILE;
 
 @ApplicationScoped
-@BlockChain("copy-docx-for-studentnu")
-public class CopyFileDocxElabForStudentNu extends BlockImpl{
+@BlockChain("copy-extract-student")
+public class CopyExtractEachStudent extends BlockImpl{
 	
 	@Inject
 	private QuestDocx data;
 	
 	@Inject
-	@BlockChain("?")
+	@BlockChain("in progress...")
 	private Block next;
+
 	@Inject
 	@BlockChain("copy-docx-input")
 	private Block loop;
-	
 	
 	@Override
 	public boolean conf() {
@@ -44,7 +44,8 @@ public class CopyFileDocxElabForStudentNu extends BlockImpl{
 	public void success() {
 		if(data.nextStudent() <= data.getStudentiNu()) {
 			loop.start();
-		}else
+		}else {
 			next.start();
+		}
 	}
 }
