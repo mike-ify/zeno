@@ -12,11 +12,12 @@ import it.zeno.blockchain.Args;
 import it.zeno.blockchain.Block;
 import it.zeno.blockchain.BlockChain;
 import it.zeno.blockchain.BlockImpl;
+import it.zeno.blockchain.Start;
 import it.zeno.scuola.verifiche.word.model.QuestDocx;
 import it.zeno.utils.base.Log;
 
 @BlockChain
-public class QuestDocxConf extends BlockImpl{
+public class QuestDocxConf extends Start{
 	@Inject
 	private QuestDocx data;
 	

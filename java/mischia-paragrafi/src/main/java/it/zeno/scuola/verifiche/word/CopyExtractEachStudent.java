@@ -19,7 +19,7 @@ public class CopyExtractEachStudent extends BlockImpl{
 	private QuestDocx data;
 	
 	@Inject
-	@BlockChain("in progress...")
+	@BlockChain("prepare-xml-input")
 	private Block next;
 
 	@Inject
@@ -32,6 +32,7 @@ public class CopyExtractEachStudent extends BlockImpl{
 		
 		String nameFileDocxElab = 
 			FILE.nameLessExt(data.getFileDocxOrigin().getFileName())
+			+ '-'
 			+ data.countStudent()
 			+ ".docx";
 		

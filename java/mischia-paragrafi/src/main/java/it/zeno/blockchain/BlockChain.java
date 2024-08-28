@@ -11,5 +11,5 @@ import javax.inject.Qualifier;
 @Target({FIELD, TYPE, METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BlockChain {
-	String value() default "block-start";
+	String value() default "";
 }

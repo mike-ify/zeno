@@ -20,7 +20,7 @@ import it.zeno.utils.base.Log;
 import it.zeno.utils.file.FILE;
 
 @ApplicationScoped
-@BlockChain("copy-extract-student")
+@BlockChain("prepare-xml-input")
 public class PreparaXmlInput extends BlockImpl{
 	
 	@Inject

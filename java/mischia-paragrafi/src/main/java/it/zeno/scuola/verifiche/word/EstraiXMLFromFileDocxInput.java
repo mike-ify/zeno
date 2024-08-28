@@ -20,7 +20,7 @@ public class EstraiXMLFromFileDocxInput extends BlockImpl{
 	private QuestDocx data;
 	
 	@Inject
-	@BlockChain("copy-docx-for-studentnu")
+	@BlockChain("copy-extract-student")
 	private Block next;
 	
 	@Override
