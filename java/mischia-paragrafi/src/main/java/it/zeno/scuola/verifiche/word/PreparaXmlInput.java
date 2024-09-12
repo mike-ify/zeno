@@ -2,9 +2,11 @@ package it.zeno.scuola.verifiche.word;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.CDI;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.xml.XMLConstants;
@@ -19,7 +21,6 @@ import it.zeno.scuola.verifiche.word.model.QuestDocx;
 import it.zeno.utils.base.Log;
 import it.zeno.utils.file.FILE;
 
-@ApplicationScoped
 @BlockChain("prepare-xml-input")
 public class PreparaXmlInput extends BlockImpl{
 	
@@ -27,27 +28,45 @@ public class PreparaXmlInput extends BlockImpl{
 	private QuestDocx data;
 	
 	@Inject
-	@BlockChain("in progress...")
+	private XMLStreamReader xmlStreamReader;
+	
+	@Inject
+	private XMLInputFactory xmlInputFactory;
+	
+	@Inject
+	@BlockChain("OriginXmlInputReadEventLoop")
 	private Block next;
 
 	@Override
 	public boolean conf() {
-		data.setFileXMLInput(data.getDirElab()
-		.resolve(FILE.nameLessExt(data.getFileDocxOrigin()))
-		.resolve("word/document.xml"));
+		
+		String fileNameDocxOrigin = FILE.nameLessExt(data.getFileDocxOrigin());
+		
+		Path fileXmlInput = data.getDirElab()
+		.resolve(fileNameDocxOrigin)
+		.resolve("word/document.xml");
+		
+		data.setFileXMLInput(fileXmlInput);
 		
 		return true;
 	}
 	
-	@Produces
-	public XMLStreamReader getXMLStreamReader() {
-		XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
-		xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-		xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+	@Override
+	public void input() {
 		try {
-			return xmlInputFactory.createXMLStreamReader(new FileInputStream(data.getFileXMLInput().toFile()));
+			data.setOriginXmlEventReader(
+				xmlInputFactory.createXMLEventReader(
+					new FileInputStream(data.getFileXMLInput().toFile())
+				)
+			);
 		} catch (FileNotFoundException | XMLStreamException e) {
 			throw Log.error(e);
 		}
 	}
+	
+	@Override
+	public void close() throws Exception {
+		data.getOriginXmlEventReader().close();	
+	}
+
 }

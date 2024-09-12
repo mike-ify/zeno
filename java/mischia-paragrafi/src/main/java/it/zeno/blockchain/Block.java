@@ -6,7 +6,7 @@ import it.zeno.utils.base.Log;
 import it.zeno.utils.pattern.Configurable;
 import it.zeno.utils.pattern.Startable;
 
-public interface Block extends Configurable,Startable{
+public interface Block extends Configurable,Startable,AutoCloseable{
 	default String getName() {
 		return getClass()
 		.getAnnotation(BlockChain.class)
@@ -22,6 +22,10 @@ public interface Block extends Configurable,Startable{
 		AFTER_CONF
 	}
 
+	@Override
+	default void close() throws Exception {
+	
+	}
 	default void input() {}
 	default boolean validateInput() {return true;}
 	default void exec() {}

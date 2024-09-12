@@ -1,10 +1,15 @@
 package it.zeno.scuola.verifiche.word.model;
 
+import java.io.FileInputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import javax.inject.Singleton;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.XMLEvent;
 
+import it.zeno.utils.base.Log;
 import it.zeno.utils.file.FILE;
 
 @Singleton
@@ -22,6 +27,9 @@ public class QuestDocx {
 	private String nameFileDocxElab;
 	private String nameFileDocxElabNoExt;
 	private Path fileXMLInput;
+	private XMLEventReader originXmlEventReader;
+	private XMLEvent event;
+	private StartXMLElement startElement;
 	
 
 	public QuestDocx() {
@@ -113,5 +121,49 @@ public class QuestDocx {
 		return fileXMLInput;
 	}
 
+	public void setOriginXmlEventReader(XMLEventReader xmlEventReader) {
+		this.originXmlEventReader = xmlEventReader;
+	}
 
+	public XMLEventReader getOriginXmlEventReader() {
+		// TODO Auto-generated method stub
+		return originXmlEventReader;
+	}
+
+	public void nextOriginXmlEventReader() {
+		try {
+			event = originXmlEventReader.nextEvent();
+		} catch (XMLStreamException e) {
+			throw Log.error(e);
+		}
+	}
+
+	public XMLEvent getEvent() {
+		// TODO Auto-generated method stub
+		return event;
+	}
+
+	public boolean isStartElement() {
+		// TODO Auto-generated method stub
+		return event.isStartElement();
+	}
+
+	public boolean isEndElement() {
+		// TODO Auto-generated method stub
+		return event.isEndElement();
+	}
+
+	public boolean hasNextOriginXmlEvent() {
+		// TODO Auto-generated method stub
+		return originXmlEventReader.hasNext();
+	}
+
+	public void setStartXMLElement(StartXMLElement startElement) {
+		this.startElement = startElement;
+	}
+
+	public String getStartElementName() {
+		// TODO Auto-generated method stub
+		return startElement.getName();
+	}
 }
