@@ -1,4 +1,4 @@
-package it.zeno.scuola.verifiche.docx.paragraphremix.model;
+package it.zeno.scuola.verifiche.word.model;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

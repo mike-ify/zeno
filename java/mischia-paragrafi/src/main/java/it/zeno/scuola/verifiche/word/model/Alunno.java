@@ -1,4 +1,4 @@
-package it.zeno.scuola.verifiche.docx.paragraphremix.model;
+package it.zeno.scuola.verifiche.word.model;
 
 import java.text.DateFormat;
 import java.text.Format;
@@ -11,16 +11,13 @@ import java.util.Locale;
 
 import org.apache.logging.log4j.message.StringFormattedMessage;
 
+import it.zeno.utils.base.Get;
 import it.zeno.utils.functions.ConsumerThrow;
 
 public class Alunno extends Paragrafo{
-	public static final String XML_START = "<w:p w14:paraId=\"03E5D41E\" w14:textId=\"759FB500\" w:rsidR=\"00CE44F0\" w:rsidRPr=\"007F4FF0\" w:rsidRDefault=\"00CE44F0\" w:rsidP=\"00CE44F0\">"
-	+ "<w:pPr><w:spacing w:before=\"40\" w:after=\"0\" w:line=\"240\" w:lineRule=\"auto\"/>"
-	+ "<w:ind w:left=\"993\" w:hanging=\"993\"/><w:rPr><w:rFonts w:ascii=\"Consolas\" w:hAnsi=\"Consolas\" w:cstheme=\"minorHAnsi\"/>"
-	+ "<w:sz w:val=\"24\"/><w:szCs w:val=\"24\"/></w:rPr></w:pPr><w:r w:rsidRPr=\"007F4FF0\">"
-	+ "<w:rPr><w:rFonts w:ascii=\"Consolas\" w:hAnsi=\"Consolas\" w:cstheme=\"minorHAnsi\"/>"
-	+ "<w:sz w:val=\"24\"/><w:szCs w:val=\"24\"/></w:rPr><w:t  xml:space=\"preserve\">";
-	private String nome;
+		public static final String XML_START = Get.prop("alunno.XML_START");
+		public static final String XML_END = Get.prop("alunno.XML_END");
+		private String nome;
 	private String cognome;
 	private String classe;
 	private String data;

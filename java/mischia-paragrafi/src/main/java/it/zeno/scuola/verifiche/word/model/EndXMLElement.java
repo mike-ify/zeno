@@ -1,10 +1,10 @@
-package it.zeno.scuola.verifiche.docx.paragraphremix.model;
+package it.zeno.scuola.verifiche.word.model;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.XMLEvent;
 
-import it.zeno.scuola.verifiche.docx.utils.XML;
+import it.zeno.utils.file.XML;
 
 public class EndXMLElement extends XMLElement{
 	private EndElement endElement;

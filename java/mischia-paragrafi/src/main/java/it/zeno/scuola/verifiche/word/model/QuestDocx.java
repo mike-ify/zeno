@@ -30,7 +30,22 @@ public class QuestDocx {
 	private XMLEventReader originXmlEventReader;
 	private XMLEvent event;
 	private StartXMLElement startElement;
+	private boolean fineParagrafiRead = false;
+
+	public boolean isFineParagrafiRead() {
+		return fineParagrafiRead;
+	}
 	
+	public boolean enableFineParagrafiRead() {
+		// TODO Auto-generated method stub
+		fineParagrafiRead = true;
+		return fineParagrafiRead;
+	}
+	
+	public boolean disableFineParagrafiRead() {
+		fineParagrafiRead = false;
+		return fineParagrafiRead;
+	}
 
 	public QuestDocx() {
 		this.studentiNu = 25;

@@ -21,7 +21,7 @@ public class StartXMLEventBlock extends BlockImpl{
 	@Inject
 	@BlockChain("start-document")
 	private Block document;
-	
+
 	private ConsumerThrow<StartXMLElement>startBodyConsumer;
 	private ConsumerThrow<StartXMLElement>startTextConsumer;
 	private ConsumerThrow<StartXMLElement>startTabConsumer;
@@ -46,29 +46,29 @@ public class StartXMLEventBlock extends BlockImpl{
 				break;
 			
 			case "body": 
-				startBodyConsumer.accept(startElement);
+				//startBodyConsumer.accept(startElement);
 				break;
 			
 			case "t":
-				startTextConsumer.accept(startElement);
+				//startTextConsumer.accept(startElement);
 				break;
 			
 			case "tab":
-				startTabConsumer.accept(startElement);
+				//startTabConsumer.accept(startElement);
 				break;
 	
 			case "sectPr":
-				startSectPrConsumer.accept(startElement);
+				//startSectPrConsumer.accept(startElement);
 				break;
 			
 			default: 
-				startDefaultConsumer.accept(startElement);
+//				startDefaultConsumer.accept(startElement);
 				break;
 		}
 	}
 
 	public StartXMLEventBlock setStartDocumentConsumer(ConsumerThrow<StartXMLElement> startDocumentConsumerThrow) {
-		this.startDocumentConsumer = startDocumentConsumerThrow;
+//		this.startDocumentConsumer = startDocumentConsumerThrow;
 		return this;
 	}
 	public StartXMLEventBlock setStartBodyConsumer(ConsumerThrow<StartXMLElement> startBodyConsumerThrow) {
@@ -92,11 +92,11 @@ public class StartXMLEventBlock extends BlockImpl{
 		return this;
 	}
 	public StartXMLEventBlock setEvent(XMLEvent event) {
-		startElement.accept(event);
+//		startElement.accept(event);
 		return this;
 	}
 	public StartXMLEventBlock accept(XMLEventReader input) {
-		startElement = new StartXMLElement(input);
+//		startElement = new StartXMLElement(input);
 		return this;
 	}
 }

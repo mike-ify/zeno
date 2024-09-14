@@ -2,6 +2,7 @@ package it.zeno.utils.base;
 
 import java.io.File;
 import java.io.InputStream;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,11 +15,19 @@ import java.util.Properties;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import it.zeno.utils.file.FILE;
 import it.zeno.utils.sql.DB;
 
-public class Get {
-	static final private Properties conf = new Properties();
+
+interface GetConsts{
+	String CONFIG_PATH = "CONFIG_PATH"
+	,APP_PROPERTIES = "app.properties"
+	,EXTERNAL_CONF_LOADED = "external.conf.loaded";
 	
+}
+public class Get implements GetConsts{
+	static final private Properties conf = new Properties();
+
 	private Get() {}
 	
 	static public Thread threadByName(final String threadName) {
@@ -79,25 +88,37 @@ public class Get {
 			}
 		});	
 		
-		
 	}
 	
 	static public Properties prop()  {
+		
 		if(conf.isEmpty())
-			try(InputStream is1 = Thread.currentThread().getContextClassLoader().getResourceAsStream("app.properties")){
-				conf.load(is1);
-				conf.setProperty("external.conf.loaded", "0");
+			try(InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("app.properties")){
+				conf.load(is);
+				conf.setProperty(EXTERNAL_CONF_LOADED, String.valueOf(0));
 			}catch (Exception e) {
 				throw new RuntimeException(e);
 			}
 		
-		if(conf.getProperty("external.conf.loaded").equals("0") && Files.exists(Paths.get("app.properties")))
-			try(InputStream is2 = Files.newInputStream(Paths.get("app.properties"))){
-				conf.load(is2);
-				conf.setProperty("external.conf.loaded", "1");
-			}catch(Exception e) {
-				throw new RuntimeException(e);
+		if(conf.getProperty(EXTERNAL_CONF_LOADED).equals(String.valueOf(0))) {
+			
+			if(FILE.loadProperties(conf,Paths.get(APP_PROPERTIES)))
+				conf.setProperty(EXTERNAL_CONF_LOADED, String.valueOf(1));
+			
+			String configPath = System.getenv(CONFIG_PATH);
+
+			if(configPath != null) {
+				FILE.loadProperties(conf,Paths.get(configPath).resolve(APP_PROPERTIES));
+				conf.setProperty(EXTERNAL_CONF_LOADED, String.valueOf(1));
 			}
+			
+			configPath = System.getProperty(CONFIG_PATH);
+			
+			if(configPath != null) {
+				FILE.loadProperties(conf,Paths.get(configPath).resolve(APP_PROPERTIES));	
+				conf.setProperty(EXTERNAL_CONF_LOADED, String.valueOf(1));
+			}
+		}
 			
 		return conf;
 	}
